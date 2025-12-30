@@ -1,15 +1,14 @@
+import { getDeveloper, developers } from "@/lib/data";
 import Link from "next/link";
 
-const developers = [
-  { id: "1", name: "Ahmad", role: "Frontend Developer", bio: "Loves React & Next.js" },
-  { id: "2", name: "Sara", role: "Backend Developer", bio: "Laravel & APIs expert" },
-  { id: "3", name: "Omar", role: "Full Stack Developer", bio: "Flutter + Node.js" },
-];
+type Props = {
+  params: { id: string };
+};
 
-export default function DeveloperPage({ params }: { params: { id: string } }) {
-  const { id } = params;
-
-  const developer = developers.find((dev) => dev.id === id);
+export default async function DeveloperPage({ params }: Props) {
+  
+  const { id } = await params; 
+  const developer = getDeveloper(id);
 
   if (!developer) {
     return <h3>Developer not found</h3>;
@@ -27,6 +26,7 @@ export default function DeveloperPage({ params }: { params: { id: string } }) {
     </div>
   );
 }
-export async function generateStaticParams() {
+
+export function generateStaticParams() {
   return developers.map((dev) => ({ id: dev.id }));
 }

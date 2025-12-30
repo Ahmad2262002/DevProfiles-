@@ -1,7 +1,5 @@
 
 
-import About from '@/components/About'
-import Hero from '@/components/Hero'
 import Link from "next/link";
 import React from 'react'
 
