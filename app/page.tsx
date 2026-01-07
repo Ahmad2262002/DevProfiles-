@@ -1,34 +1,16 @@
+import React from 'react';
+import ServerSideFetching from "@/components/ServerSideFetching";
 
-
-import Link from "next/link";
-import React from 'react'
-
-
-
-
-const developers = [
-  { id: "1", name: "Ahmad", role: "Frontend Developer", bio: "Loves React & Next.js" },
-  { id: "2", name: "Sara", role: "Backend Developer", bio: "Laravel & APIs expert" },
-  { id: "3", name: "Omar", role: "Full Stack Developer", bio: "Flutter + Node.js" },
-];
+// This is a Server Component by default in the App Router.
+// We are fetching data directly in the component body using `await`.
+// 
+// WHY SERVER SIDE FETCHING?
+// 1. **SEO**: The data is rendered on the server, so search engines can crawl the full list of developers immediately.
+// 2. **Performance**: Initial load contains meaningful content (the list of developers) rather than a blank shell.
+// 3. **Reduced Client Bundle**: The fetching logic and full data set don't need to be shipped to the client.
 
 export default function HomePage() {
   return (
-    <div>
-     
-      
-      <h1>DevProfiles</h1>
-
-      <ul>
-        {developers.map((dev) => (
-          <li key={dev.id}>
-            <Link href={`/developers/${dev.id}`}>
-              <strong>{dev.name}</strong> – {dev.role}
-            </Link>
-            <p>{dev.bio}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ServerSideFetching />
   );
 }

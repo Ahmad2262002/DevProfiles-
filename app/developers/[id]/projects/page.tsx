@@ -1,29 +1,23 @@
-import { getProjects } from "@/lib/data";
+"use client";
+
+import React, { use } from "react";
+import ClientSideFetching from "@/components/ClientSideFetching";
 
 type Props = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
-export default async function ProjectsPage({ params }: Props) {
-  const { id } = await params;
-
-  const projects = getProjects(id);
-
-  if (!projects.length) {
-    return <p>No projects found for this developer.</p>;
-  }
+export default function ProjectsPage({ params }: Props) {
+  // Unwrap params using React.use() or await if it were a server component,
+  // but since this is a client component, we receive the promise.
+  // Actually, in Next.js 15+, params is a promise.
+  // Let's use `use` to unwrap it, or just await it if we were async (but client components can't be async).
+  // Standard pattern for Client Components receiving params in Next 15:
+  const { id } = use(params);
 
   return (
     <div>
-      <h3>Projects</h3>
-      <ul>
-        {projects.map((project) => (
-          <li key={project.id}>
-            <strong>{project.name}</strong>
-            <p>{project.description}</p>
-          </li>
-        ))}
-      </ul>
+      <ClientSideFetching developerId={id} />
     </div>
   );
 }
